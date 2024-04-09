@@ -9,6 +9,7 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import Logo from "./elements/Logo";
 import Navigator from "./elements/Navigator";
 import { cn } from "@/lib/utils";
+import useUIState from "@/hooks/useUIState";
 
 const HeaderDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
@@ -49,6 +50,8 @@ const Header = ({ children }) => {
       currentHeadRef?.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const { headerImageSrc } = useUIState();
   return (
     <header ref={headRef} className="relative overflow-y-auto w-full h-full">
       <div className=" absolute top-0 w-full">
@@ -57,7 +60,10 @@ const Header = ({ children }) => {
             alt="mediaitem"
             className="object-cover"
             fill
-            src="https://images.unsplash.com/photo-1705733282884-701c98680343?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src={
+              headerImageSrc ||
+              "https://images.unsplash.com/photo-1705733282884-701c98680343?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            }
           />
         </div>
         <div className="absolute h-[400px] top-0 bg-black opacity-40 w-full"></div>
