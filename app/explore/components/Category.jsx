@@ -17,6 +17,7 @@ const CategoryMenu = ({ icon, label }) => {
 };
 
 const Category = () => {
+
   return (
     <div className="flex flex-col gap-4 w-full lg:flex-row">
       <CategoryMenu label={"최신음악"} icon={<FiMusic color="#AAAAAA" />} />
