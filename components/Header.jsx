@@ -37,6 +37,18 @@ const Header = ({ children }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const headRef = useRef();
 
+  function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        timeout = null;
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+
   useEffect(() => {
     const currentHeadRef = headRef.current;
 
@@ -45,9 +57,12 @@ const Header = ({ children }) => {
       setIsScrolled(scrollValue !== 0);
     };
 
-    currentHeadRef?.addEventListener("scroll", handleScroll);
+    const debouncedHandleScroll = debounce(handleScroll, 100); // 디바운싱 적용
+
+    currentHeadRef?.addEventListener("scroll", debouncedHandleScroll);
+
     return () => {
-      currentHeadRef?.removeEventListener("scroll", handleScroll);
+      currentHeadRef?.removeEventListener("scroll", debouncedHandleScroll);
     };
   }, []);
 
